@@ -1,0 +1,26 @@
+﻿@model InternetShopWarehouseWeb.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Помилка";
+}
+
+<div class="container mt-4">
+    <div class="alert alert-danger">
+        <h2 class="mb-3">Сталася помилка</h2>
+
+        <p>
+            Під час обробки запиту виникла помилка. Спробуйте повторити дію або поверніться на головну сторінку.
+        </p>
+
+        @if (Model.ShowRequestId)
+        {
+            <p class="mb-0">
+                <strong>Код запиту:</strong> <code>@Model.RequestId</code>
+            </p>
+        }
+    </div>
+
+    <a asp-controller="Products" asp-action="Index" class="btn btn-primary">
+        На головну
+    </a>
+</div>

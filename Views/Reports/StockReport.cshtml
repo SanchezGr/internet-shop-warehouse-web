@@ -1,0 +1,110 @@
+﻿@model IEnumerable<InternetShopWarehouseWeb.Models.Product>
+
+@{
+    ViewData["Title"] = "Звіт по залишках";
+    var reportDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+}
+
+<style>
+    @@media print {
+        .no-print {
+            display: none !important;
+        }
+
+        body {
+            font-size: 14px;
+        }
+
+        .card {
+            border: 1px solid #ccc !important;
+            box-shadow: none !important;
+        }
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h2 class="mb-1">Звіт по залишках товарів</h2>
+            <p class="text-muted mb-0">
+                Дата формування звіту: @reportDate
+            </p>
+        </div>
+
+        <button onclick="window.print()" class="btn btn-primary no-print">
+            Друк / Зберегти в PDF
+        </button>
+    </div>
+
+    <p>
+        У звіті відображено поточний стан товарів на складі інтернет-магазину електроніки,
+        їх кількість, ціну, загальну вартість та стан залишку.
+    </p>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Усього товарів</h6>
+                    <h3>@ViewBag.TotalProducts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Товарів з малим залишком</h6>
+                    <h3>@ViewBag.LowStockProducts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Загальна вартість складу</h6>
+                    <h3>@ViewBag.TotalWarehouseValue грн</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Назва</th>
+                <th>Категорія</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Загальна вартість</th>
+                <th>Стан</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+                var totalPrice = product.Quantity * product.Price;
+
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Quantity</td>
+                    <td>@product.Price.ToString("0.00") грн</td>
+                    <td>@totalPrice.ToString("0.00") грн</td>
+                    <td>
+                        @if (product.Quantity < 5)
+                        {
+                            <span class="badge bg-danger">Мало товару</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">В наявності</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

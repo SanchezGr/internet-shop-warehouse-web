@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Очікування доступу";
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <div class="alert alert-warning shadow-sm">
+        <h4 class="alert-heading">Доступ очікує підтвердження</h4>
+        <p>
+            Ваш обліковий запис створено, але права доступу ще не надані адміністратором.
+        </p>
+        <hr />
+        <p class="mb-0">
+            Після підтвердження адміністратором ви зможете користуватися функціями системи.
+        </p>
+    </div>
+
+    <a asp-action="Logout" class="btn btn-secondary">Вийти</a>
+</div>

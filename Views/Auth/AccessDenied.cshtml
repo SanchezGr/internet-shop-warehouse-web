@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Доступ заборонено";
+}
+
+<div class="container mt-5" style="max-width: 700px;">
+    <div class="alert alert-danger shadow-sm">
+        <h3 class="mb-3">Доступ заборонено</h3>
+
+        <p>
+            У вас немає прав доступу до цієї сторінки.
+        </p>
+
+        <hr />
+
+        <p class="mb-0">
+            Якщо вам потрібен доступ до цього розділу, зверніться до адміністратора системи.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-controller="Products" asp-action="Index" class="btn btn-primary">
+            На головну
+        </a>
+
+        <button type="button" class="btn btn-secondary" onclick="history.back()">
+            Назад
+        </button>
+    </div>
+</div>

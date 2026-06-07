@@ -1,0 +1,38 @@
+﻿@model InternetShopWarehouseWeb.Models.User
+
+@{
+    ViewData["Title"] = "Змінити роль";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="mb-4">Змінити роль користувача</h2>
+
+    <form asp-action="EditRole" method="post" class="card p-4 shadow-sm">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label class="form-label">ПІБ</label>
+            <input class="form-control" value="@Model.FullName" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Логін</label>
+            <input class="form-control" value="@Model.Login" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Роль</label>
+            <select name="role" class="form-select">
+                <option value="Guest" selected="@(Model.Role == "Guest")">Guest</option>
+                <option value="Seller" selected="@(Model.Role == "Seller")">Seller</option>
+                <option value="Manager" selected="@(Model.Role == "Manager")">Manager</option>
+                <option value="Admin" selected="@(Model.Role == "Admin")">Admin</option>
+            </select>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-warning">Зберегти</button>
+            <a asp-action="Index" class="btn btn-secondary">Назад</a>
+        </div>
+    </form>
+</div>

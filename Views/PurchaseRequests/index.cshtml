@@ -1,0 +1,92 @@
+﻿@model IEnumerable<InternetShopWarehouseWeb.Models.PurchaseRequest>
+
+@{
+    ViewData["Title"] = "Заявки на закупівлю";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Заявки на закупівлю</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <a asp-action="Create" class="btn btn-success mb-3">
+        Створити заявку
+    </a>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Товар</th>
+                <th>Постачальник</th>
+                <th>Кількість</th>
+                <th>Дата створення</th>
+                <th>Статус</th>
+                <th style="width: 280px;">Дії</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Product?.Name</td>
+                    <td>@request.Supplier?.Name</td>
+                    <td>@request.Quantity</td>
+                    <td>@request.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>
+                        @if (request.Status == "Нова")
+                        {
+                            <span class="badge bg-primary">Нова</span>
+                        }
+                        else if (request.Status == "Виконано")
+                        {
+                            <span class="badge bg-success">Виконано</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Скасовано</span>
+                        }
+                    </td>
+                    <td>
+                        @if (request.Status == "Нова" && !request.IsApplied)
+                        {
+                            <form asp-action="Complete" asp-route-id="@request.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Виконати
+                                </button>
+                            </form>
+
+                            <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-warning btn-sm">
+                                Редагувати
+                            </a>
+                        }
+                        else if (request.Status == "Виконано")
+                        {
+                            <span class="text-muted me-2">Заявку виконано</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted me-2">Заявку скасовано</span>
+                        }
+
+                        <a asp-action="Delete" asp-route-id="@request.Id" class="btn btn-danger btn-sm">
+                            Видалити
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

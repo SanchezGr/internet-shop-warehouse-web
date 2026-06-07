@@ -1,0 +1,28 @@
+﻿@model InternetShopWarehouseWeb.Models.PurchaseRequest
+
+@{
+    ViewData["Title"] = "Видалити заявку";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Видалити заявку</h2>
+
+    <div class="alert alert-danger">
+        Ви дійсно хочете видалити цю заявку? Цю дію неможливо скасувати.
+    </div>
+
+    <div class="card p-4 shadow-sm">
+        <p><strong>Товар:</strong> @Model.Product?.Name</p>
+        <p><strong>Постачальник:</strong> @Model.Supplier?.Name</p>
+        <p><strong>Кількість:</strong> @Model.Quantity</p>
+        <p><strong>Дата створення:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+        <p><strong>Статус:</strong> @Model.Status</p>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">Видалити</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</div>

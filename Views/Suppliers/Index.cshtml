@@ -1,0 +1,60 @@
+﻿@model IEnumerable<InternetShopWarehouseWeb.Models.Supplier>
+
+@{
+    ViewData["Title"] = "Постачальники";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Постачальники</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <a asp-action="Create" class="btn btn-success mb-3">
+        Додати постачальника
+    </a>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Назва</th>
+                <th>Контактна особа</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th style="width: 220px;">Дії</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var supplier in Model)
+            {
+                <tr>
+                    <td>@supplier.Name</td>
+                    <td>@supplier.ContactPerson</td>
+                    <td>@supplier.Phone</td>
+                    <td>@supplier.Email</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@supplier.Id" class="btn btn-warning btn-sm">
+                            Редагувати
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@supplier.Id" class="btn btn-danger btn-sm">
+                            Видалити
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

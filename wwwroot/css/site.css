@@ -1,0 +1,84 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.password-tooltip .tooltip-inner {
+    background-color: #2d3748;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    padding: 8px 10px;
+    max-width: 260px;
+    text-align: left;
+}
+
+.password-tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #2d3748;
+}
+
+.password-tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #2d3748;
+}
+
+.password-tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #2d3748;
+}
+
+.password-tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #2d3748;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+}
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.badge {
+    border-radius: 8px;
+    padding: 6px 9px;
+}
+
+.container {
+    max-width: 1200px;
+}

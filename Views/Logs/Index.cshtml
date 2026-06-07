@@ -1,0 +1,109 @@
+﻿@model IEnumerable<InternetShopWarehouseWeb.Models.ActionLog>
+
+@{
+    ViewData["Title"] = "Журнал дій";
+    var selectedCategory = ViewBag.SelectedCategory as string;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Журнал дій користувачів</h2>
+
+    <p class="text-muted">
+        На цій сторінці адміністратор може переглядати основні дії, які виконувалися в системі.
+    </p>
+
+    <form method="get" class="row mb-3">
+        <div class="col-md-4">
+            <select name="category" class="form-select">
+                <option value="">Усі дії</option>
+
+                @if (selectedCategory == "register")
+                {
+                    <option value="register" selected>Реєстрації</option>
+                }
+                else
+                {
+                    <option value="register">Реєстрації</option>
+                }
+
+                @if (selectedCategory == "products")
+                {
+                    <option value="products" selected>Товари</option>
+                }
+                else
+                {
+                    <option value="products">Товари</option>
+                }
+
+                @if (selectedCategory == "suppliers")
+                {
+                    <option value="suppliers" selected>Постачальники</option>
+                }
+                else
+                {
+                    <option value="suppliers">Постачальники</option>
+                }
+
+                @if (selectedCategory == "requests")
+                {
+                    <option value="requests" selected>Заявки</option>
+                }
+                else
+                {
+                    <option value="requests">Заявки</option>
+                }
+
+                @if (selectedCategory == "users")
+                {
+                    <option value="users" selected>Користувачі та ролі</option>
+                }
+                else
+                {
+                    <option value="users">Користувачі та ролі</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">
+                Фільтрувати
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Скинути
+            </a>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            За вибраним фільтром записи не знайдено.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Користувач</th>
+                    <th>Роль</th>
+                    <th>Дія</th>
+                    <th>Дата і час</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var log in Model)
+                {
+                    <tr>
+                        <td>@log.UserLogin</td>
+                        <td>@log.UserRole</td>
+                        <td>@log.Action</td>
+                        <td>@log.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

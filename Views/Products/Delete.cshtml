@@ -1,0 +1,27 @@
+﻿@model InternetShopWarehouseWeb.Models.Product
+
+@{
+    ViewData["Title"] = "Видалити товар";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Видалити товар</h2>
+
+    <div class="alert alert-danger">
+        Ви дійсно хочете видалити цей товар? Цю дію неможливо скасувати.
+    </div>
+
+    <div class="card p-4 shadow-sm">
+        <p><strong>Назва:</strong> @Model.Name</p>
+        <p><strong>Категорія:</strong> @Model.Category</p>
+        <p><strong>Кількість:</strong> @Model.Quantity</p>
+        <p><strong>Ціна:</strong> @Model.Price.ToString("0.00") грн</p>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">Видалити</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</div>

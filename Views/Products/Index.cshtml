@@ -1,0 +1,123 @@
+﻿@model IEnumerable<InternetShopWarehouseWeb.Models.Product>
+
+@{
+    ViewData["Title"] = "Товари на складі";
+
+    var userRole = Context.Session.GetString("UserRole");
+    bool canManageProducts = userRole == "Manager" || userRole == "Admin";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Склад інтернет-магазину електроніки</h2>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Усього товарів</h6>
+                    <h3>@ViewBag.TotalProducts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Малий залишок</h6>
+                    <h3>@ViewBag.LowStockProducts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Вартість складу</h6>
+                    <h3>@ViewBag.TotalWarehouseValue грн</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="get" class="d-flex mb-3">
+        <input type="text"
+               name="search"
+               value="@ViewBag.Search"
+               class="form-control me-2"
+               placeholder="Пошук за назвою або категорією" />
+
+        <button type="submit" class="btn btn-primary">Пошук</button>
+    </form>
+
+    @if (canManageProducts)
+    {
+        <a asp-action="Create" class="btn btn-success mb-3">
+            Додати товар
+        </a>
+    }
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Назва</th>
+                <th>Категорія</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Стан</th>
+
+                @if (canManageProducts)
+                {
+                    <th style="width: 220px;">Дії</th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Quantity</td>
+                    <td>@product.Price.ToString("0.00") грн</td>
+                    <td>
+                        @if (product.Quantity < 5)
+                        {
+                            <span class="badge bg-danger">Мало товару</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">В наявності</span>
+                        }
+                    </td>
+
+                    @if (canManageProducts)
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">
+                                Редагувати
+                            </a>
+
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm">
+                                Видалити
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
